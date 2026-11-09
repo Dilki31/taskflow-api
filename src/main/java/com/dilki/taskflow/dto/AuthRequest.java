@@ -1,0 +1,9 @@
+package com.dilki.taskflow.dto;
+import lombok.Data;
+
+@Data
+public class AuthRequest {
+    private String email;
+    private String password;
+    private String fullName; // Register වෙද්දී විතරක් ඕනේ
+}
