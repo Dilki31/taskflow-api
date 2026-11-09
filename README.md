@@ -16,7 +16,7 @@ A production-ready Spring Boot backend for a Task Management application, featur
 - **Maven** build system
 
 ## 🚀 How to Run Locally
-```bash
+  bash
 # 1. Clone the repository
 git clone https://github.com/Dilki31/taskflow-api.git
 
