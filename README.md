@@ -29,20 +29,14 @@ git clone https://github.com/Dilki31/taskflow-api.git
 
 # 5. The API will be available at http://localhost:8083/api/
 
-📂 Project Structure
-- **config/ - Security & Data Initialization**
-
-- **controller/ - REST API Endpoints (Auth, Tasks)**
-
-- **dto/ - Data Transfer Objects**
-
-- **entity/ - Database Models (User, Task)**
-
-- **repository/ - Spring Data JPA Interfaces**
-
-- **security/ - JWT Filter, Service & UserDetails**
-
-- **service/ - Business Logic**
+## 📂 Project Structure
+- `config/` - Security & Data Initialization
+- `controller/` - REST API Endpoints (Auth, Tasks)
+- `dto/` - Data Transfer Objects
+- `entity/` - Database Models (User, Task)
+- `repository/` - Spring Data JPA Interfaces
+- `security/` - JWT Filter, Service & UserDetails
+- `service/` - Business Logic
 
 👨‍💻 Author
 Dilki Nanayakkara - @Dilki31
