@@ -16,30 +16,30 @@ A production-ready Spring Boot backend for a Task Management application, featur
 - **Maven** build system
 
 ## 🚀 How to Run Locally
-  bash
+  ```bash
 # 1. Clone the repository
 git clone https://github.com/Dilki31/taskflow-api.git
-
+  ```
 # 2. Create a PostgreSQL database named 'taskflow_db'
 
 # 3. Update src/main/resources/application.properties with your DB credentials
 
 # 4. Run the Spring Boot application
-
+ 
 📂 Project Structure
-config/ - Security & Data Initialization
+- **config/ - Security & Data Initialization**
 
-controller/ - REST API Endpoints (Auth, Tasks)
+- **controller/ - REST API Endpoints (Auth, Tasks)**
 
-dto/ - Data Transfer Objects
+- **dto/ - Data Transfer Objects**
 
-entity/ - Database Models (User, Task)
+- **entity/ - Database Models (User, Task)**
 
-repository/ - Spring Data JPA Interfaces
+- **repository/ - Spring Data JPA Interfaces**
 
-security/ - JWT Filter, Service & UserDetails
+- **security/ - JWT Filter, Service & UserDetails**
 
-service/ - Business Logic
+- **service/ - Business Logic**
 
 👨‍💻 Author
 Dilki Nanayakkara - @Dilki31
