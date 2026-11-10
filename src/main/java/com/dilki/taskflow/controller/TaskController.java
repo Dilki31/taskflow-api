@@ -3,11 +3,11 @@ package com.dilki.taskflow.controller;
 import com.dilki.taskflow.dto.TaskRequest;
 import com.dilki.taskflow.entity.Task;
 import com.dilki.taskflow.service.TaskService;
+import jakarta.validation.Valid;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/tasks")
@@ -18,7 +18,7 @@ public class TaskController {
 
 
     @PostMapping
-    public ResponseEntity<Task> createTask(@RequestBody TaskRequest request) {
+    public ResponseEntity<Task> createTask(@Valid @RequestBody TaskRequest request) {
         return ResponseEntity.ok(taskService.createTask(request));
     }
 

@@ -44,5 +44,22 @@ security - JWT Filter, Service & UserDetails
 
 service - Business Logic
 
+## ⚙️ Configuration
+Secrets are **not** stored in this repository. Set these environment variables before starting the app:
+
+| Variable | Description |
+|---|---|
+| `DB_PASSWORD` | Password of your local PostgreSQL user |
+| `JWT_SECRET` | Base64-encoded secret key, at least 256 bits (32 bytes) |
+
+Generate a key: `openssl rand -base64 32` (macOS/Linux/Git Bash).
+
+Run on Windows PowerShell:
+```powershell
+$env:DB_PASSWORD="your-db-password"
+$env:JWT_SECRET="your-generated-base64-key"
+./mvnw spring-boot:run
+```
+
 👨‍💻 Author
 Dilki Nanayakkara - @Dilki31
