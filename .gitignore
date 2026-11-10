@@ -31,3 +31,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Node (not used by this API) ###
+node_modules/

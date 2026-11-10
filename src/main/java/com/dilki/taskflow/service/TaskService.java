@@ -5,12 +5,13 @@ import com.dilki.taskflow.entity.Task;
 import com.dilki.taskflow.entity.User;
 import com.dilki.taskflow.repository.TaskRepository;
 import com.dilki.taskflow.repository.UserRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Service;
-
 import java.time.LocalDateTime;
 import java.util.List;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 @RequiredArgsConstructor
@@ -19,17 +20,34 @@ public class TaskService {
     private final TaskRepository taskRepository;
     private final UserRepository userRepository;
 
-    // ලොගින් වෙලා ඉන්න යූසර්ව ගන්නවා
+    // Returns the currently logged-in user
     private User getCurrentUser() {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         return userRepository.findByEmail(email).orElseThrow();
+    }
+
+    private Task.TaskStatus parseStatus(String status) {
+        if (status == null || status.isBlank()) {
+            return Task.TaskStatus.TODO;
+        }
+        try {
+            return Task.TaskStatus.valueOf(status.trim().toUpperCase());
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("Invalid status. Use TODO, IN_PROGRESS or DONE");
+        }
+    }
+
+    // Finds a task only if it belongs to the current user (prevents access to other users' tasks)
+    private Task findOwnTask(Long taskId) {
+        return taskRepository.findByIdAndUserId(taskId, getCurrentUser().getId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Task not found"));
     }
 
     public Task createTask(TaskRequest request) {
         Task task = Task.builder()
                 .title(request.getTitle())
                 .description(request.getDescription())
-                .status(Task.TaskStatus.valueOf(request.getStatus().toUpperCase()))
+                .status(parseStatus(request.getStatus()))
                 .createdAt(LocalDateTime.now())
                 .user(getCurrentUser())
                 .build();
@@ -41,16 +59,12 @@ public class TaskService {
     }
 
     public Task updateTaskStatus(Long taskId, String status) {
-        Task task = taskRepository.findById(taskId)
-                .orElseThrow(() -> new RuntimeException("Task not found"));
-
-        task.setStatus(Task.TaskStatus.valueOf(status.toUpperCase()));
+        Task task = findOwnTask(taskId);
+        task.setStatus(parseStatus(status));
         return taskRepository.save(task);
     }
 
     public void deleteTask(Long taskId) {
-        Task task = taskRepository.findById(taskId)
-                .orElseThrow(() -> new RuntimeException("Task not found"));
-        taskRepository.delete(task);
+        taskRepository.delete(findOwnTask(taskId));
     }
 }
